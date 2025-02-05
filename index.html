@@ -1,14 +1,68 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geolocation Info</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> <!-- Include jQuery -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Fuck You, Scammers</title>
+    <style>
+        body {
+            background-color: #111;
+            color: #fff;
+            font-family: "Courier New", Courier, monospace;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            font-size: 3.5rem;
+            color: crimson;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .scammer-gif {
+            margin: 20px auto;
+            width: 50%;
+            max-width: 400px;
+            border: 3px solid crimson;
+            border-radius: 10px;
+        }
+        .burn {
+            font-size: 2rem;
+            color: orange;
+            text-shadow: 0 0 10px crimson;
+        }
+        a {
+            text-decoration: none;
+            color: lime;
+            font-size: 1.5rem;
+        }
+        a:hover {
+            text-shadow: 0 0 10px lime;
+        }
+    </style>
 </head>
 <body>
+    <h1>Fuck You, Scammers</h1>
+    <p>Hey, you low-life, basement-dwelling piece of shit. Scamming people isn’t a career—it’s a cry for help.</p>
+    <p class="burn">Do the world a favor and log the fuck off forever.</p>
+    <img class="scammer-gif" src="https://media.giphy.com/media/VbnUQpnihPSIgIXuZv/giphy.gif" alt="Scammers Be Burning">
+    <p>Need advice on your next scam? Sure:</p>
+    <a href="https://www.google.com/search?q=how+to+stop+being+a+worthless+scammer" target="_blank">Click Here, Dumbass</a>
+
+    <script>
+        // Replace with your backend URL for logging the IP
+        fetch('https://your-backend-url.com/log-ip')  // Make sure this is the actual backend URL
+            .then(response => response.text())
+            .then(data => console.log(data))
+            .catch(error => console.error('Error logging IP:', error));
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> <!-- Include jQuery -->
     <script src="grab.js"></script> <!-- Link to your grab.js file -->
-    <h1>Geolocation Info</h1>
+    </script>
 </body>
 </html>
